@@ -1,0 +1,28 @@
+main {
+  display: flex;
+  max-width: 800px;
+  margin: 25vh auto;
+  align-items: center;
+}
+
+img {
+  max-width: 400px;
+}
+
+main div {
+  margin-right: 40px;
+}
+
+main a {
+  color: #78a9ff;
+  text-align: center;
+  display: block;
+}
+
+@media (max-width: 600px) {
+  main {
+    flex-direction: column-reverse;
+    text-align: center;
+    margin: 5vh auto;
+  }
+}

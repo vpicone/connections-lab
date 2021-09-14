@@ -1,0 +1,15 @@
+{
+  "name": "clab",
+  "version": "1.0.0",
+  "description": "Connections lab - Fall 2021",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx @11ty/eleventy --serve",
+    "build": "npx @11ty/eleventy"
+  },
+  "author": "Vince Picone",
+  "license": "ISC",
+  "devDependencies": {
+    "@11ty/eleventy": "^0.12.1"
+  }
+}
