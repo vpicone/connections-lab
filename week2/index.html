@@ -139,10 +139,14 @@ layout: base.html
   const infoButton = document.querySelector(".info-button");
   const infoPanel = document.querySelector(".info-panel");
 
+  const closePanel = () => {
+    delete infoButton.dataset.expanded;
+    delete infoPanel.dataset.expanded;
+  };
+
   infoButton.addEventListener("click", () => {
     if (infoButton.dataset.expanded) {
-      delete infoButton.dataset.expanded;
-      delete infoPanel.dataset.expanded;
+      closePanel();
     } else {
       infoButton.dataset.expanded = true;
       infoPanel.dataset.expanded = true;
@@ -151,8 +155,18 @@ layout: base.html
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && infoButton.dataset.expanded) {
-      delete infoButton.dataset.expanded;
-      delete infoPanel.dataset.expanded;
+      closePanel();
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    const messageContainer = document.querySelector(".message-container");
+    if (
+      !messageContainer.contains(event.target) &&
+      !infoPanel.contains(event.target) &&
+      !infoButton.contains(event.target)
+    ) {
+      closePanel();
     }
   });
 
