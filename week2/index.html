@@ -181,6 +181,7 @@ layout: base.html
     }
 
     submitButton.setAttribute("disabled", true);
+    textInput.focus();
 
     // reduce page saturation by 0.1;
     page.style["filter"] = `saturate(${Math.max((saturation -= 0.15), 0)})`;

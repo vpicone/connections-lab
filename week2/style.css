@@ -169,11 +169,14 @@ header {
   font-weight: 400;
   font-style: normal;
   font-size: 40px;
-  transform: translateY(150px);
-  transition: transform 0.5s ease;
-  transition-delay: 1s;
+  transform: translateY(75px);
+  filter: opacity(0);
+  transition: all 0.3s ease-in;
+  transition-delay: 0.5s;
 }
 
 .no-reply.visible {
-  transform: translateY(0px);
+  transform: translateY(25px);
+  transition-timing-function: ease-out;
+  filter: opacity(100%);
 }
