@@ -2,5 +2,59 @@
 layout: base.html
 ---
 
+<nav aria-label="Assignment navigation">
+  <select name="Week selection">
+    <optgroup label="I. Talking to the Client">
+      <option value="/">Choose an assignment</option>
+      <option value="/week0/index.html">0. Pre-work</option>
+      <option value="/week1/index.html">1. Making a Webpage</option>
+      <option value="/week2/index.html">2. Making things happen</option>
+      <option disabled value="/week3/index.html">3. Data and APIs</option>
+      <option disabled value="/week4/index.html">
+        4. More with JS and Data
+      </option>
+      <option disabled value="/week5/index.html">5. Project 1</option>
+    </optgroup>
+    <optgroup label="II. Talking to Each Other">
+      <option disabled value="/week6/index.html">6. Intro to the Server</option>
+      <option disabled value="/week7/index.html">
+        7. More Server + Storage
+      </option>
+      <option disabled value="/week8/index.html">
+        8. Real-time + Multi-Person
+      </option>
+      <option disabled value="/week9/index.html">9. More with Sockets</option>
+      <option disabled value="/week10/index.html">10. Project 2</option>
+    </optgroup>
+    <optgroup label="III. Stop Talking, Start Listening">
+      <option disabled value="/week11/index.html">
+        11. Client-side Libraries
+      </option>
+      <option disabled value="/week12/index.html">
+        12. Peer to Peer with WebRTC
+      </option>
+      <option disabled value="/week13/index.html">
+        13. Final Project Play-Testing
+      </option>
+      <option disabled value="/week14/index.html">14. Final Project</option>
+      <option disabled value="/week15/index.html">15. Fall Showcase</option>
+    </optgroup>
+  </select>
+  <a id="assignment-navigation-link" href="/">Go</a>
+</nav>
 <h1>Connections Lab – Fall 2021 Assignments</h1>
 <p>Chose an assignment with the menu on the right</p>
+<script>
+  const select = document.querySelector('[name="Week selection"]');
+  console.log(select.options);
+  console.log(window.location.pathname);
+  Array.from(select.options).forEach((option) => {
+    if (option.value === window.location.pathname) {
+      option.selected = true;
+    }
+  });
+  const navLink = document.getElementById("assignment-navigation-link");
+  select.addEventListener("change", (e) => {
+    navLink.href = e.target.value;
+  });
+</script>

@@ -1,0 +1,190 @@
+---
+layout: base.html
+---
+
+<link rel="stylesheet" href="https://use.typekit.net/yuj6rpt.css" />
+<div class="page">
+  <header>
+    <span class="title">ghosted.ai</span
+    ><button class="info-button">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="40"
+        height="40"
+        viewBox="0 0 32 32"
+      >
+        <path
+          style="fill: none"
+          id="inner-path"
+          d="M16,8a1.5,1.5,0,1,1-1.5,1.5A1.5,1.5,0,0,1,16,8Zm4,13.875H17.125v-8H13v2.25h1.875v5.75H12v2.25h8Z"
+          transform="translate(0 0)"
+        />
+        <path
+          fill="#262626"
+          d="M16,2A14,14,0,1,0,30,16,14,14,0,0,0,16,2Zm0,6a1.5,1.5,0,1,1-1.5,1.5A1.5,1.5,0,0,1,16,8Zm4,16.125H12v-2.25h2.875v-5.75H13v-2.25h4.125v8H20Z"
+          transform="translate(0 0)"
+        />
+      </svg>
+    </button>
+    <aside class="info-panel">
+      <span class="title">Ghosting</span>
+      <p>
+        Ghosting, also known as simmering or icing, is a colloquial term which
+        describes the practice of ending all communication and contact with
+        another person without any apparent warning or justification and
+        subsequently ignoring any attempts to reach out or communication made by
+        said person.
+      </p>
+      <p>
+        The most common cause of ghosting in a personal relationship is to avoid
+        emotional discomfort in a relationship. A person ghosting typically has
+        little acknowledgement of how it will make the other person feel.
+      </p>
+      <p>
+        Ghosting is associated with negative mental health affects on the person
+        on the receiving end, and has been described by some mental health
+        professionals as a passive-aggressive form of emotional abuse or
+        cruelty.
+      </p>
+      <p>
+        In 2014, a
+        <a
+          href="https://today.yougov.com/topics/lifestyle/articles-reports/2014/10/28/poll-results-ghosting"
+          >YouGov survey</a
+        >
+        was taken to see if Americans have ever ghosted their partner to end a
+        relationship. In a 2014 survey, 1,000 US adults were interviewed about
+        ghosting with results yielding that just over 10% of Americans have
+        ghosted someone to break up with them.
+      </p>
+    </aside>
+  </header>
+  <main>
+    <div class="message-container">
+      <div contenteditable class="message-header"></div>
+      <div class="message-contents">
+        <span class="message message__received">Hey</span>
+      </div>
+      <div class="message-input-container">
+        <input
+          required
+          autocapitalize="on"
+          autofocus
+          placeholder="Aa"
+          class="message-input"
+          type="text"
+        />
+        <button disabled onclick="onSubmit" class="submit" type="submit">
+          Submit
+        </button>
+      </div>
+    </div>
+    <span class="no-reply">No reply...</span>
+  </main>
+</div>
+
+<script>
+  let saturation = 1;
+
+  const names = [
+    "Presley",
+    "Alejandra",
+    "Briley",
+    "Jaqueline",
+    "Desirae",
+    "Camden",
+    "Wesley",
+    "Brendan",
+    "Jerimiah",
+    "Amirah",
+    "Jaden",
+    "Kelsie",
+  ];
+
+  const botReplies = [
+    "Huh?",
+    "I'm busy, talk later.",
+    "Cool.",
+    "Whatever.",
+    "Okay.",
+  ];
+
+  const messageHeader = document.querySelector(".message-header");
+  const randomNameIndex = Math.floor(Math.random() * names.length);
+  messageHeader.textContent = names[randomNameIndex];
+
+  const textInput = document.querySelector(".message-input");
+  const submitButton = document.querySelector(".submit");
+  const messageContainer = document.querySelector(".message-contents");
+  const page = document.querySelector(".page");
+  const noReply = document.querySelector(".no-reply");
+
+  // Example for message structure to map over
+  let messageHistory = [{ text: "Hey" }];
+
+  textInput.addEventListener("input", (e) => {
+    if (e.target.value) {
+      submitButton.removeAttribute("disabled");
+    } else {
+      submitButton.setAttribute("disabled", true);
+    }
+  });
+
+  textInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      onSubmit(e);
+    }
+  });
+
+  const infoButton = document.querySelector(".info-button");
+  const infoPanel = document.querySelector(".info-panel");
+
+  infoButton.addEventListener("click", () => {
+    if (infoButton.dataset.expanded) {
+      delete infoButton.dataset.expanded;
+      delete infoPanel.dataset.expanded;
+    } else {
+      infoButton.dataset.expanded = true;
+      infoPanel.dataset.expanded = true;
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && infoButton.dataset.expanded) {
+      delete infoButton.dataset.expanded;
+      delete infoPanel.dataset.expanded;
+    }
+  });
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    messageHistory.push({ self: true, text: textInput.value });
+    const newMessage = document.createElement("span");
+    newMessage.textContent = textInput.value;
+    newMessage.classList.add("message", "message__self");
+    textInput.value = "";
+    messageContainer.prepend(newMessage);
+    if (messageHistory.length % 3 === 0) {
+      const botMessage = document.createElement("span");
+      const message = botReplies[Math.floor(Math.random() * botReplies.length)];
+      //   TODO: add randomness/connect with wit.ai bot
+      botMessage.textContent = message;
+      botMessage.classList.add("message", "message__received");
+      setTimeout(() => {
+        messageContainer.prepend(botMessage);
+      }, Math.random() * 5000 + 2000);
+    } else {
+      noReply.classList.add("visible");
+      setTimeout(() => {
+        noReply.classList.remove("visible");
+      }, 2000);
+    }
+
+    submitButton.setAttribute("disabled", true);
+
+    // reduce page saturation by 0.1;
+    page.style["filter"] = `saturate(${Math.max((saturation -= 0.15), 0)})`;
+  };
+
+  submitButton.addEventListener("click", onSubmit);
+</script>
